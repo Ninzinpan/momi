@@ -1,32 +1,30 @@
-# -*- coding: utf-8 -*-
 import sys
 import pygame
 from pygame.locals import *
-from edit_image_class import edit_image
+class edit_image:
+    def resize(self,orig,new_width):
+        orig_x = orig.get_width()
+        orig_y = orig.get_height()
 
-# 画面サイズ
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 450
-
-
-
+        result = pygame.transform.smoothscale(orig,(new_width,orig_y*(new_width/orig_x)))
+        return result
 
 def main():
-    # Pygameの初期化
+    SCREEN_WIDTH = 1600/2
+    SCREEN_HEIGHT = 900/2
+        # Pygameの初期化
     pygame.init()
     # 画面設定
     pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))  
     screen = pygame.display.get_surface()
-
     santa = pygame.image.load("image/magao.png").convert_alpha()
-    #元サイズ　975, 673
-    santa = edit_image().resize(santa,700)
+    santa = edit_image().resize(santa,100)
     santa_rect = santa.get_rect()
 
 
 
     #サンタ画像の初期位置
-    santa_rect.center = (350, 250)
+    santa_rect.center = (300,300) 
 
     running = True  # ループ処理の実行を継続するフラグ
 
@@ -36,8 +34,9 @@ def main():
         # 更新間隔（30msec）           
         pygame.time.wait(30)
         # 画面の背景色（RGBA）     
-        screen.fill((0, 0, 0, 0))
-        screen.blit(santa, santa_rect)  
+        screen.fill((100, 0, 0, 0))
+        screen.blit(santa, santa_rect)   
+
 
 
         # イベント処理
@@ -50,10 +49,7 @@ def main():
                 # Escキーが押されたら終了
                 if event.key == K_ESCAPE:   
                     running = False
-                if event.key == K_a:
-                    santa = pygame.image.load("image/choitoro.png").convert_alpha()
-                    santa = edit_image().resize(santa,700)
-               
+            
     # Pygameとプログラムの実行を終了
     pygame.quit()
     sys.exit()
